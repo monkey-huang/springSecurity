@@ -8,8 +8,6 @@ public class testCoammand implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("test");
-		System.out.println("estset");
 	}
 
 }
