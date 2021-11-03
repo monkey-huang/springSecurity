@@ -50,7 +50,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 		try {
 			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 			// 很重要!!! 這裡會幫你把request得到的password(第二個參數)進行加密，並將加密的內容與資料庫加密過後的資料做比對
-			System.out.println(new BCryptPasswordEncoder().encode(user.getPassword()));
+//			System.out.println(new BCryptPasswordEncoder().encode(user.getPassword()));
 			// 這邊會傳給UserDetailsService
 			// 創建Authentication給AuthenticationManager
 			return authenticationManager.authenticate(

@@ -49,8 +49,10 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
 		// 判断如果有权限信息，放到权限上下文中d
 		if (authRequest != null) {
 			// 讓Security的框架，可以讓該使用者通過此驗證(透過token)
+			// Obtains the current context
 			SecurityContextHolder.getContext().setAuthentication(authRequest);
 		}
+		// 做所有的doFilter
 		chain.doFilter(request, response);
 	}
 
@@ -68,6 +70,8 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
 				SimpleGrantedAuthority auth = new SimpleGrantedAuthority("ROLE_" + permissionValue);
 				authority.add(auth);
 			}
+//			String testToken = "setsetsetsetstrejiogjiroejgdfvkmdl";
+			// 這邊必須要嚴謹檢驗crendential
 			return new UsernamePasswordAuthenticationToken(username, token, authority);
 		}
 

@@ -52,7 +52,8 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().csrf().disable()
 				.authorizeRequests()
 //				.anyRequest().authenticated()
-				.antMatchers("/test/**").hasRole("role123").anyRequest().authenticated()
+				.antMatchers("/test/**").hasRole("role123456")
+				.anyRequest().authenticated()
 				.and()
 				.logout()
 				.logoutUrl("/logout")// 退出路径
