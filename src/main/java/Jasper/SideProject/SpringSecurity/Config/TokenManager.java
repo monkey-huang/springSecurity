@@ -47,18 +47,18 @@ public class TokenManager {
 				// 設置到期時間
 				.setExpiration(new Date(System.currentTimeMillis() + tokenEcpiration))
 				
-				.signWith(SignatureAlgorithm.HS512, tokenSignKey.getBytes("UTF-8")).compressWith(CompressionCodecs.GZIP).compact();
+				.signWith(SignatureAlgorithm.HS512, tokenSignKey.getBytes()).compressWith(CompressionCodecs.GZIP).compact();
 		return token;
 	}
 
 	// 2 根据token字符串得到用户信息
 	public String getUserInfoFromToken(String token) throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
-		String userinfo = Jwts.parserBuilder().setSigningKey(tokenSignKey.getBytes("UTF-8")).build().parseClaimsJws(token).getBody()
+		String userinfo = Jwts.parserBuilder().setSigningKey(tokenSignKey.getBytes()).build().parseClaimsJws(token).getBody()
 				.getSubject();
 		return userinfo;
 	}
 
-	// 3 删除token
+	// 3 删除token TODO
 	public void removeToken(String token) {
 	}
 }

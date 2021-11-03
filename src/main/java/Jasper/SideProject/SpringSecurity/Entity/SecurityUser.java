@@ -11,8 +11,7 @@ import org.springframework.util.StringUtils;
 
 import lombok.Data;
 
-@Data
-public class SecurityUser implements UserDetails {
+@Datapublic class SecurityUser implements UserDetails {
 
 	/**
 	 * 

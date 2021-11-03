@@ -34,8 +34,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 	// 權限管理的工具
 	private AuthenticationManager authenticationManager;
 
-	public TokenLoginFilter(AuthenticationManager authenticationManager, TokenManager tokenManager,
-			RedisTemplate redisTemplate) {
+	public TokenLoginFilter(AuthenticationManager authenticationManager, TokenManager tokenManager, RedisTemplate redisTemplate) {
 		this.authenticationManager = authenticationManager;
 		this.tokenManager = tokenManager;
 		this.redisTemplate = redisTemplate;
@@ -64,7 +63,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 		}
 	}
 
-	// 2. 認證成功會呼叫的方法
+	// 2. 認證成功會呼叫的方法(在AuthenticationManager之後)
 	// Authentication authResult 會傳認證成功的訊息過來
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
@@ -78,6 +77,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 		 */
 		// 把token的資訊放入redis
 		redisTemplate.opsForValue().set(user.getCurrentUserInfo().getUsername(), user.getPermissionValueList());
+		redisTemplate.opsForValue().set(user.getCurrentUserInfo().getUsername() + "token", token);
 		// 設定HttpServletResponse response的值回去
 		ReponseUtil.out(response, R.ok().data("token", token));
 

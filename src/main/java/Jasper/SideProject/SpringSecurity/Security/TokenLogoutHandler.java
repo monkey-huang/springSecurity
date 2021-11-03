@@ -17,9 +17,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
-//退出处理器
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class TokenLogoutHandler implements LogoutHandler {
 	private TokenManager tokenManager;
+
 	private RedisTemplate redisTemplate;
 
 	public TokenLogoutHandler(TokenManager tokenManager, RedisTemplate redisTemplate) {
@@ -40,17 +41,14 @@ public class TokenLogoutHandler implements LogoutHandler {
 			try {
 				username = tokenManager.getUserInfoFromToken(token);
 				redisTemplate.delete(username);
+				redisTemplate.delete(username + "token");
 			} catch (SignatureException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExpiredJwtException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (UnsupportedJwtException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (MalformedJwtException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block

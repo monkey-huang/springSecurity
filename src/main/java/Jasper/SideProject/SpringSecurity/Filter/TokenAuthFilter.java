@@ -25,10 +25,11 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class TokenAuthFilter extends BasicAuthenticationFilter {
 
 	private TokenManager tokenManager;
+
 	private RedisTemplate redisTemplate;
 
 	public TokenAuthFilter(AuthenticationManager authenticationManager, TokenManager tokenManager,
@@ -53,7 +54,9 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
 		chain.doFilter(request, response);
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
+	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request)
+			throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException,
+			IllegalArgumentException, UnsupportedEncodingException {
 		String token = request.getHeader("token");
 		if (token != null) {
 			// 从token获取用户名
@@ -62,7 +65,7 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
 			List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(username);
 			Collection<GrantedAuthority> authority = new ArrayList<>();
 			for (String permissionValue : permissionValueList) {
-				SimpleGrantedAuthority auth = new SimpleGrantedAuthority(permissionValue);
+				SimpleGrantedAuthority auth = new SimpleGrantedAuthority("ROLE_" + permissionValue);
 				authority.add(auth);
 			}
 			return new UsernamePasswordAuthenticationToken(username, token, authority);

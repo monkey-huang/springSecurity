@@ -28,14 +28,15 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private TokenManager tokenManager;
 	
-	@Autowired
-	private RedisTemplate redisTemplate;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private RedisTemplate redisTemplate;
+
 
 	/**
 	 * 配置设置
@@ -49,7 +50,9 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.exceptionHandling().authenticationEntryPoint(new UnauthEntryPoint())// 没有权限访问
 //	      .antMatchers("/admin/**").hasRole("ADMIN")
 				.and().csrf().disable()
-				.authorizeRequests().anyRequest().authenticated()
+				.authorizeRequests()
+//				.anyRequest().authenticated()
+				.antMatchers("/test/**").hasRole("role123").anyRequest().authenticated()
 				.and()
 				.logout()
 				.logoutUrl("/logout")// 退出路径
@@ -71,6 +74,8 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(password());
+		
+//		auth.inMemoryAuthentication().withUser("123456").password("WERWER").roles("ADMIN", "USER");
 	}
 
 
