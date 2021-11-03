@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
 
 public class PersonTranrs implements Serializable{
 

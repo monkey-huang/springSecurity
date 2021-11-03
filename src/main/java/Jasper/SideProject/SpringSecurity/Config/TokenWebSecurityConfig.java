@@ -52,7 +52,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().csrf().disable()
 				.authorizeRequests()
 //				.anyRequest().authenticated()
-				.antMatchers("/test/**").hasRole("role123456")
+				.antMatchers("/test/**").hasRole("role123")
 				.anyRequest().authenticated()
 				.and()
 				.logout()
@@ -76,7 +76,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(password());
 		
-//		auth.inMemoryAuthentication().withUser("123456").password("WERWER").roles("ADMIN", "USER");
+//		auth.inMemoryAuthentication().withUser("123456").password("WERWER").roles("ADMIN", "USER"); 
 	}
 
 

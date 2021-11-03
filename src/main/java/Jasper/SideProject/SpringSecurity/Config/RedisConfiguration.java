@@ -21,13 +21,14 @@ import java.time.Duration;
 
 @EnableCaching //开启缓存
 @Configuration  //配置类
+@SuppressWarnings({"rawtypes", "deprecation", "unchecked"})
 public class RedisConfiguration extends CachingConfigurerSupport {
 
-    @Bean
+	@Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
